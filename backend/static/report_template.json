@@ -1,0 +1,9 @@
+{
+    "title": "Resume Analysis Report",
+    "fields": [
+        "Name",
+        "Skills",
+        "ATS Score",
+        "Level"
+    ]
+}
