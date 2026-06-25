@@ -1,11 +1,14 @@
-let lastSkills = [];
-let lastScore = 0;
-let lastLevel = "";
-let chartInstance = null;
+
+let chart; // global chart variable
 
 function uploadResume() {
 
     let fileInput = document.getElementById("fileInput");
+
+    if (fileInput.files.length === 0) {
+        alert("Please select a file");
+        return;
+    }
 
     let formData = new FormData();
     formData.append("file", fileInput.files[0]);
@@ -16,35 +19,43 @@ function uploadResume() {
     })
     .then(res => res.json())
     .then(data => {
+
         console.log(data);
 
-        document.getElementById("result").innerHTML =
-            "Score: " + data.score + "<br>" +
-            "Skills: " + data.skills;
+        // SCORE
+        let score = data.score || 0;
+        document.getElementById("score").innerText = score + "%";
+
+        // OUTPUT TEXT
+        document.getElementById("output").innerText =
+            "Skills Found: " + data.skills;
+
+        // CHART UPDATE
+        updateChart(score);
+
     })
     .catch(err => {
         console.error(err);
+        alert("Error connecting to server");
     });
 }
 
-/* ---------------- GRAPH ---------------- */
-function drawChart(score) {
 
-    const ctx = document.getElementById("atsChart");
+// ---------------- CHART ----------------
+function updateChart(score) {
 
-    if (!ctx) return;
+    let ctx = document.getElementById("atsChart").getContext("2d");
 
-    if (chartInstance) {
-        chartInstance.destroy();
+    if (chart) {
+        chart.destroy();
     }
 
-    chartInstance = new Chart(ctx, {
+    chart = new Chart(ctx, {
         type: "doughnut",
         data: {
-            labels: ["Score", "Remaining"],
             datasets: [{
                 data: [score, 100 - score],
-                backgroundColor: ["#00ff99", "#334155"]
+                backgroundColor: ["#00ff99", "#333"]
             }]
         },
         options: {
@@ -56,76 +67,40 @@ function drawChart(score) {
     });
 }
 
-/* ---------------- DOWNLOAD ---------------- */
+
+// ---------------- DOWNLOAD ----------------
 function downloadReport() {
 
-    fetch("http://localhost:5000/download", {
+    let score = document.getElementById("score").innerText;
+    let skills = document.getElementById("output").innerText;
+
+    let data = {
+        score: score,
+        skills: skills
+    };
+
+    fetch("https://ai-resume-analyzer-6-ksi1.onrender.com/download", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            skills: lastSkills,
-            score: lastScore,
-            level: lastLevel
-        })
+        body: JSON.stringify(data)
     })
-    .then(res => {
-        if (!res.ok) throw new Error();
-        return res.blob();
-    })
+    .then(res => res.blob())
     .then(blob => {
 
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
 
         a.href = url;
         a.download = "resume_report.json";
-
         document.body.appendChild(a);
         a.click();
         a.remove();
+
     })
-    .catch(() => {
+    .catch(err => {
+        console.error(err);
         alert("Download failed");
     });
-}
-
-/* ---------------- JOB MATCH ---------------- */
-function matchJob() {
-
-    const jobInput = document.getElementById("jobInput").value || "";
-    const jobSkills = jobInput.split(",").map(s => s.trim()).filter(Boolean);
-
-    fetch("http://localhost:5000/match", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            skills: lastSkills,
-            job_skills: jobSkills
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(
-            `Match: ${data.match_score}%\nMissing: ${data.missing.join(", ")}`
-        );
-    })
-    .catch(() => {
-        alert("Match failed");
-    });
-}
-function analyzeResume(text){
-    let skills = ["html","css","javascript","python"];
-    let score = 0;
-
-    skills.forEach(skill=>{
-        if(text.toLowerCase().includes(skill)){
-            score += 25;
-        }
-    });
-
-    return "Score: " + score + "%";
 }
