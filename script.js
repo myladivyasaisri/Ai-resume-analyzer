@@ -130,3 +130,15 @@ function matchJob() {
         alert("Match failed");
     });
 }
+function analyzeResume(text){
+    let skills = ["html","css","javascript","python"];
+    let score = 0;
+
+    skills.forEach(skill=>{
+        if(text.toLowerCase().includes(skill)){
+            score += 25;
+        }
+    });
+
+    return "Score: " + score + "%";
+}
