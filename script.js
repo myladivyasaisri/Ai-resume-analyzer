@@ -5,33 +5,26 @@ let chartInstance = null;
 
 function uploadResume() {
 
-    const file = document.getElementById("file").files[0];
+    let fileInput = document.getElementById("fileInput");
 
-    if (!file) {
-        alert("Select a file");
-        return;
-    }
+    let formData = new FormData();
+    formData.append("file", fileInput.files[0]);
 
-    const formData = new FormData();
-    formData.append("file", file);
+    fetch("https://ai-resume-analyzer-6-ksi1.onrender.com/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
 
-    document.getElementById("output").innerText = "Analyzing...";
-
-   fetch("https://ai-resume-analyzer-6-ksi1.onrender.com/upload", {
-  method: "POST",
-  body: formData
-})
-.then(res => res.json())
-.then(data => {
-    console.log(data);
-
-    document.getElementById("result").innerHTML =
-        "Score: " + data.score + "<br>" +
-        "Skills: " + data.skills;
-})
-.catch(err => {
-    console.error(err);
-});
+        document.getElementById("result").innerHTML =
+            "Score: " + data.score + "<br>" +
+            "Skills: " + data.skills;
+    })
+    .catch(err => {
+        console.error(err);
+    });
 }
 
 /* ---------------- GRAPH ---------------- */
