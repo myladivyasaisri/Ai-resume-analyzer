@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background: 
+        linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)),
+        url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+/* TITLE FIX - ALWAYS CENTER */
+h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* CENTER WRAPPER */
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* CARD FIX - SMALL + CLEAN */
+.card {
+    width: 380px;   /* 🔥 reduced size */
+    max-width: 90%;
+
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    text-align: center;
+    color: white;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+
+    border: none;
+    border-radius: 8px;
+
+    margin-top: 10px;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #00ff99;
+    color: black;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00cc77;
+}
+
+/* RESULT BOX */
+.result {
+    margin-top: 15px;
+    padding: 10px;
+
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+/* GRAPH */
+canvas {
+    margin-top: 10px;
+}
+
+/* TEXT */
+pre {
+    text-align: left;
+    margin-top: 10px;
+}
