@@ -1,59 +1,53 @@
-# 🤖 AI Resume Analyzer
+# 📄 AI Resume Analyzer
 
-## 📌 About Project
-This is a simple AI Resume Analyzer web application.  
-It analyzes resumes and shows skills, match score, and suggestions.
-
----
+A simple web-based Resume Analyzer that extracts resume content, matches skills with job-related keywords, and provides basic analysis results. Built for learning Full Stack Development and basic AI/ML concepts.
 
 ## 🚀 Features
-- Upload Resume (PDF/Text)
-- Skill Detection
-- Job Match Score
-- Suggestions for improvement
-- Simple UI
+- Upload resume file
+- Extract and analyze content
+- Match skills with job-related keywords
+- Show simple score / feedback
+- Fast and lightweight UI
 
----
-
-## 🛠️ Technologies Used
-- HTML
-- CSS
+## 🛠️ Tech Stack
+- HTML5
+- CSS3
 - JavaScript
-- Node.js
+- Node.js (optional backend)
 - Express.js
-
----
+- Multer
 
 ## 📁 Project Structure
-AI-Resume-Analyzer/
-├── public/
+resume-analyzer/
+│
+├── frontend/
 │   ├── index.html
 │   ├── style.css
-│   └── script.js
+│   ├── script.js
 │
-├── uploads/
-├── server.js
-└── package.json
+├── backend/
+│   ├── server.js
+│   ├── uploads/
+│
+└── README.md
 
----
+## ▶️ How to Run
 
-## ⚙️ How to Run
-1. Clone repo  
-   git clone https://github.com/your-username/ai-resume-analyzer.git
+### Frontend Only
+Open:
+frontend/index.html
 
-2. Install dependencies  
-   npm install
+### Backend Mode
+npm install  
+node server.js  
+Open: http://localhost:3000
 
-3. Run project  
-   node server.js
-
-4. Open browser  
-   http://localhost:3000
-
----
+## ✨ Working
+1. Upload resume  
+2. System extracts text  
+3. Skills are matched  
+4. Result/score is displayed  
 
 ## 👩‍💻 Author
 MYLA DIVYA SAI SRI
-
----
 
