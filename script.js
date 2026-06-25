@@ -17,27 +17,21 @@ function uploadResume() {
 
     document.getElementById("output").innerText = "Analyzing...";
 
-    fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
+   fetch("https://ai-resume-analyzer-6-ksi1.onrender.com/upload", {
+  method: "POST",
+  body: formData
+})
+.then(res => res.json())
+.then(data => {
+    console.log(data);
 
-        lastSkills = data.skills || [];
-        lastScore = data.score || 0;
-        lastLevel = data.level || "";
-
-        document.getElementById("output").innerText =
-            `Skills: ${lastSkills.join(", ") || "None"}\n` +
-            `Score: ${lastScore}%\n` +
-            `Level: ${lastLevel}`;
-
-        drawChart(lastScore);
-    })
-    .catch(() => {
-        document.getElementById("output").innerText = "Backend error";
-    });
+    document.getElementById("result").innerHTML =
+        "Score: " + data.score + "<br>" +
+        "Skills: " + data.skills;
+})
+.catch(err => {
+    console.error(err);
+});
 }
 
 /* ---------------- GRAPH ---------------- */
