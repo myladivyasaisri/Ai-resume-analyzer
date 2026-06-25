@@ -1,3 +1,5 @@
 flask
 flask-cors
 pdfplumber
+pymupdf
+python-docx
